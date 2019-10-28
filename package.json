@@ -1,0 +1,142 @@
+{
+  "name": "vscode-regexman",
+  "displayName": "regexman",
+  "description": "another easy way to run regex",
+  "version": "0.0.1",
+  "publisher": "inu1255",
+  "engines": {
+    "vscode": "^1.39.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "run regex",
+    "regex runner"
+  ],
+  "activationEvents": [
+    "onCommand:regexman.run",
+    "onCommand:regexman.list"
+  ],
+  "main": "extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "regexman.run",
+        "category": "regex",
+        "title": "run"
+      },
+      {
+        "command": "regexman.list",
+        "category": "regex",
+        "title": "list"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "regexman.run",
+          "when": "1 == 2"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "regexman.run",
+        "key": "ctrl+j",
+        "mac": "cmd+j",
+        "when": "editorHasSelection",
+        "args": [
+          "\\s*\\n\\s*",
+          ""
+        ]
+      },
+      {
+        "command": "regexman.list",
+        "key": "ctrl+k ctrl+r",
+        "mac": "cmd+k cmd+r"
+      }
+    ],
+    "configuration": [
+      {
+        "title": "RegexMan",
+        "properties": {
+          "regexman.regexs": {
+            "type": "array",
+            "definitions": "regex defines",
+            "markdownDescription": "predefine regex, an array each item contains `title` and `args`, which `title` is the display name and `args` just like `args` in keybinding",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "description": "regex title"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "details": {
+                  "type": "string"
+                },
+                "args": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "regex chain, the odd one is regex search string, the even is replace value; just like String.replace(new RegExp(odd,'g'),even)"
+                }
+              }
+            },
+            "default": [
+              {
+                "title": "join lines without space",
+                "description": "合并选中行且不带空格",
+                "args": [
+                  "\\s*\\n\\s*",
+                  ""
+                ]
+              },
+              {
+                "title": "js convert to ts",
+                "args": [
+                  "(let|var|const) (\\w+) = require\\(('|\")([^'\"]+)\\3\\)",
+                  "import * as $2 from '$4'",
+                  "exports.(\\w+) = function",
+                  "export function $1"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "test": "node ./test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.1",
+    "@types/mocha": "^5.2.6",
+    "@types/node": "^10.12.21",
+    "@types/vscode": "^1.39.0",
+    "eslint": "^5.13.0",
+    "glob": "^7.1.4",
+    "mocha": "^6.1.4",
+    "typescript": "^3.3.1",
+    "vscode-test": "^1.2.0"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inu1255/vscode-regexman.git"
+  },
+  "author": "inu1255",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/inu1255/vscode-regexman/issues"
+  },
+  "homepage": "https://github.com/inu1255/vscode-regexman#readme"
+}
